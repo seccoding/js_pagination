@@ -1,0 +1,74 @@
+body {
+    padding: 0px;
+    margin: 0px;
+}
+div.grid-wrapper > * {box-sizing: border-box;}
+
+div.grid-wrapper > div {
+    color: #333;
+    font-size: 9pt;
+}
+
+div.grid-wrapper > div:nth-child(1) {
+    font-weight: bold;
+    margin: 0px;
+    padding: 5px 5px 5px 4px;
+    position: relative;
+}
+
+div.grid-wrapper > div:nth-child(1) > div.search {
+    position: absolute;
+    right: 4px;
+    top: 2px;
+}
+
+div.grid-wrapper div.nav ul {
+    margin: 5px 0px 5px 3px;
+    padding: 0px;
+}
+
+div.grid-wrapper div.nav ul li {
+    display: inline-block;
+    padding-left: 10px;
+    cursor: pointer;
+}
+
+div.grid-wrapper div.nav ul li:first-child {
+    padding-left: 0px;
+}
+
+table.grid {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table.grid td, table.grid th {
+    border: 1px solid #eee;
+    font-size: 9pt;
+    color: #555;
+    padding: 2px 2px 2px 8px;
+    position: relative;
+    min-width: 0px;
+}
+
+table.grid th {
+    border: 1px solid #ddd;
+    background-color: #f3f3f3;
+    padding: 2px;
+}
+
+table.grid tbody tr:hover {
+    background-color: #f3f3f3;
+}
+
+table.grid .col-selector {
+    display: inline;
+    width: 5px;
+    user-select: none;
+    position: absolute;
+    cursor: col-resize;
+    right: 0px;
+    top:0px;
+    bottom: 0px;
+}
+
