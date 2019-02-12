@@ -18,7 +18,7 @@ class Pagenation {
         key: "",
         callback: function(key) {console.log(key)}
     }) {
-        this._width = data.width;
+        this._width = (data.width || "100%");
         this._title = data.title;
         this._query = data.query;
         this._data = data.data;
@@ -28,6 +28,8 @@ class Pagenation {
         this._key = data.key;
         this._callback = data.callback;
 
+        this._doc = undefined;
+
         this._navCount = Math.ceil(this._data.length / this._pageCount);
         this._nowGroup = 0;
         this._navPageCount = 10;
@@ -35,13 +37,27 @@ class Pagenation {
         this._search = "";
     }
 
+    getDoc(selector) {
+        if ( selector ) {
+            return document.querySelector(this._query + " " + selector)
+        }
+        return document.querySelector(this._query);
+    }
+
+    getDocAll(selector) {
+        if ( selector ) {
+            return document.querySelectorAll(this._query + " " + selector)
+        }
+        return undefined;
+    }
+
     go(index = 0, searchValue = "") {
         if ( index < 0 ) {
             index = 0;
         }
 
-        this._search = searchValue;
-
+        this._search = searchValue; 
+        
         let datas = this._data.filter((d) => {
             for ( let k in d ) {
                 if ( (d[k]+ "").includes(this._search) ) {
@@ -59,9 +75,12 @@ class Pagenation {
         this._nowGroup = parseInt(this._index / this._navPageCount);
         this._navCount = Math.ceil(datas.length / this._pageCount);
 
-        this._show(this._query, html);
-        document.querySelector("#search").value = this._search;
-        document.querySelector("#search").focus();
+        this._show(html);
+
+        
+        
+        this.getDoc(".search").value = this._search;
+        this.getDoc(".search").focus();
     }
 
     next() {
@@ -92,15 +111,15 @@ class Pagenation {
             <div class="grid-wrapper" style="width: ${this._width};">
                 <div>
                     ${this._title}
-                    <div class="search">
-                        <input type="text" id="search" placeholder="Search" />
+                    <div class="search-wrapper">
+                        <input type="text" class="search" placeholder="Search" />
                     </div>
                 </div>
                 <table class="grid">
                     <colgroup>`;
 
                     this._titles.forEach((title, i) => {
-                        html += `<col id="${title}" />`;
+                        html += `<col class="${title}" />`;
                     });
 
                     html += `</colgroup>
@@ -134,39 +153,39 @@ class Pagenation {
         return html;
     }
 
-    _show(querySelector, data) {
+    _show(data) {
         let that = this;
 
         data += this._paginate();
 
         data += "</div>";
 
-        document.querySelector(querySelector).innerHTML = data;
+        this.getDoc().innerHTML = data;
 
+        this._doc = document.querySelector(this._query);
         (function generatePaginate() {
             
             let groupId = undefined;
             let x, diffX = undefined;
             let col = undefined;
             let colWidth = undefined;
-            let selectors = document.querySelectorAll(".col-selector")
+            let selectors = that.getDocAll(".col-selector");
            
             selectors.forEach((div, i) => {
-
+                
                 if ( (i+1) % parseInt(that._cols.length) > 0 ) {
                     div.addEventListener("mouseover", (e) => {
                         groupId = e.target.parentElement.attributes[0].nodeValue;
-                        document.querySelector(`#${groupId}`).style.borderRight = "1px double #000";
+                        that.getDoc(`.${groupId}`).style.borderRight = "1px double #000";
                     });
     
                     div.addEventListener("mousedown", (e) => {
                         if ( !groupId ) {
                             groupId = e.target.parentElement.attributes[0].nodeValue;
                         }
-                        col = document.querySelector(`#${groupId}`);
+                        col = that.getDoc(`.${groupId}`);
                         x = e.pageX;
                         colWidth = e.target.parentElement.offsetWidth + 2;
-                        
                     });
     
                     document.addEventListener("mousemove", (e) => {                    
@@ -178,7 +197,7 @@ class Pagenation {
     
                     document.addEventListener("mouseup", (e) => {
                         if ( col ) {
-                            document.querySelector(`#${groupId}`).style.borderRight = "1px solid #555";
+                            that.getDoc(`.${groupId}`).style.borderRight = "1px solid #555";
                             groupId = undefined;
                             x = undefined;
                             diffX = undefined;
@@ -189,7 +208,7 @@ class Pagenation {
     
                     div.addEventListener("mouseout", (e) => {
                         if ( groupId && !col ) {
-                            document.querySelector(`#${groupId}`).style.borderRight = "1px solid #555";
+                            that.getDoc(`.${groupId}`).style.borderRight = "1px solid #555";
                         }
                     });
                 }
@@ -198,14 +217,14 @@ class Pagenation {
         })();
 
         (function search() {
-            let search = document.querySelector("#search");
+            let search = that.getDoc(".search");
             search.addEventListener("keyup", (e) => {
                 that.go(0, search.value);
             });
         })();
 
         (function rowClick() {
-            document.querySelectorAll("tbody>tr").forEach((tr, i) => {
+            that.getDocAll("tbody>tr").forEach((tr, i) => {
                 tr.addEventListener("click", (e) => {
                     that._callback(tr.attributes[0].nodeValue);
                 });
@@ -213,37 +232,37 @@ class Pagenation {
         })();
 
         (function addPageClickEvent() {
-            let first = document.querySelector(".first");
+            let first = that.getDoc(".first");
             if(first) {
                 first.addEventListener("click", (e) => {
                     that.first();
                 });
             }
 
-            let prev = document.querySelector(".prev");
+            let prev = that.getDoc(".prev");
             if(prev) {
                 prev.addEventListener("click", (e) => {
                     that.prev();
                 });
             }
 
-            let go = document.querySelectorAll(".go");
+            let go = that.getDocAll(".go");
             if(go) {
                 go.forEach((li, i) => {
                     li.addEventListener("click", (e) => {
-                        that.go(li.attributes[1].nodeValue);
+                        that.go(li.attributes[1].nodeValue, that._search);
                     })
                 });
             }
 
-            let next = document.querySelector(".next");
+            let next = that.getDoc(".next");
             if(next) {
                 next.addEventListener("click", (e) => {
                     that.next();
                 });
             }
 
-            let last = document.querySelector(".last");
+            let last = that.getDoc(".last");
             if(last) {
                 last.addEventListener("click", (e) => {
                     that.last();
@@ -267,7 +286,7 @@ class Pagenation {
         }
 
         for ( let i = startPage; i < endPage; i++ ) {
-            data += `<li class="go" data-index="${i}" onclick="page.go(${i})">${i == this._index ? '<b>'+(i+1)+'</b>' : i+1}</li>`;
+            data += `<li class="go" data-index="${i}">${i == this._index ? '<b>'+(i+1)+'</b>' : i+1}</li>`;
         }
 
         if ( endPage < this._navCount ) {
