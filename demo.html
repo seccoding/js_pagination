@@ -7,7 +7,7 @@
             let page2 = undefined;
 
             window.onload = function() {
-                page = new Pagenation(pageCount = 10);
+                page = new Pagination(pageCount = 10);
                 page.init({
                     width: "350px",
                     title: "Registered Articles",
@@ -34,7 +34,7 @@
                 });
                 page.go();            
 
-                page2 = new Pagenation(pageCount = 10);
+                page2 = new Pagination(pageCount = 10);
                 page2.init({
                     title: "Registered Articles",
                     query: "#wrapper2",
