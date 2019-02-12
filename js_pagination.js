@@ -1,4 +1,4 @@
-class Pagenation {
+class Pagination {
 
     constructor(pageCount = 10, prevText = "Prev", nextText = "Next") {
         this._pageCount = pageCount;
@@ -137,8 +137,15 @@ class Pagenation {
         data.forEach((dt, i) => {
             html += `<tr data-key="${dt[this._key]}">`
             this._cols.forEach((col, i) => {
+
+                let value = dt[col];
+
+                if ( typeof(col) == "object" ) {
+                    value = this._extractValue(dt, col);
+                }
+
                 html += `
-                        <td data-id="${this._titles[i]}">${dt[col]}</div></td>
+                        <td data-id="${this._titles[i]}">${value}</div></td>
                 `;
             });
             html += "</tr>"
@@ -149,6 +156,19 @@ class Pagenation {
                 </table>`;
         
         return html;
+    }
+
+    _extractValue(dt, columns) {
+        for ( let key in columns ) {
+            console.log(key);
+            
+            if ( typeof(columns[key]) == "object" ) {
+                return this._extractValue(dt[key], columns[key])
+            }
+            else {
+                return dt[key][columns[key]];
+            }
+        }
     }
 
     _show(data) {
