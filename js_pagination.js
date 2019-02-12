@@ -155,7 +155,7 @@ class Pagenation {
         data += this._paginate();
         data += "</div>";
         this.getDoc().innerHTML = data;
-        _setEvents(this);
+        this._setEvents(this);
     }
 
     _setEvents(that) {
