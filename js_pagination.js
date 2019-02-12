@@ -28,8 +28,6 @@ class Pagenation {
         this._key = data.key;
         this._callback = data.callback;
 
-        this._doc = undefined;
-
         this._navCount = Math.ceil(this._data.length / this._pageCount);
         this._nowGroup = 0;
         this._navPageCount = 10;
@@ -154,15 +152,13 @@ class Pagenation {
     }
 
     _show(data) {
-        let that = this;
-
         data += this._paginate();
-
         data += "</div>";
-
         this.getDoc().innerHTML = data;
+        _setEvents(this);
+    }
 
-        this._doc = document.querySelector(this._query);
+    _setEvents(that) {
         (function generatePaginate() {
             
             let groupId = undefined;
