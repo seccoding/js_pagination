@@ -30,7 +30,7 @@ class Pagenation {
 
         this._navCount = Math.ceil(this._data.length / this._pageCount);
         this._nowGroup = 0;
-        this._navPageCount = 2;
+        this._navPageCount = 10;
 
         this._search = "";
     }
