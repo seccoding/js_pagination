@@ -160,8 +160,6 @@ class Pagination {
 
     _extractValue(dt, columns) {
         for ( let key in columns ) {
-            console.log(key);
-            
             if ( typeof(columns[key]) == "object" ) {
                 return this._extractValue(dt[key], columns[key])
             }
