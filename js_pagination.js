@@ -55,13 +55,25 @@ class Pagination {
         }
 
         this._search = searchValue; 
-        
+        let that = this;
         let datas = this._data.filter((d) => {
+            let i = 0;
             for ( let k in d ) {
-                if ( (d[k]+ "").includes(this._search) ) {
-                    return true;
+                if ( typeof(d[k]) != "object" ) {
+                    if ( (d[k]+ "").includes(this._search) ) {
+                        return true;
+                    }
                 }
+                else {
+                    let value = this._extractValue(d, that._cols[i]) + "";
+
+                    if ( value.includes(this._search) ) {
+                        return true;
+                    }
+                }
+                i++;
             }
+            
             return false;
         });
 
@@ -75,26 +87,24 @@ class Pagination {
 
         this._show(html);
 
-        
-        
         this.getDoc(".search").value = this._search;
         this.getDoc(".search").focus();
     }
 
-    next() {
-        this.go((this._nowGroup + 1) * this._navPageCount);
+    next(searchValue = "") {
+        this.go((this._nowGroup + 1) * this._navPageCount, searchValue);
     }
 
-    prev() {
-        this.go((this._nowGroup - 1) * this._navPageCount);
+    prev(searchValue = "") {
+        this.go((this._nowGroup - 1) * this._navPageCount, searchValue);
     }
 
-    first() {
-        this.go(0);
+    first(searchValue = "") {
+        this.go(0, searchValue);
     }
 
-    last() {
-        this.go(this._navCount-1);
+    last(searchValue = "") {
+        this.go(this._navCount-1, searchValue);
     }
 
     calculatePagenateParams(index) {
@@ -159,13 +169,18 @@ class Pagination {
     }
 
     _extractValue(dt, columns) {
-        for ( let key in columns ) {
-            if ( typeof(columns[key]) == "object" ) {
-                return this._extractValue(dt[key], columns[key])
+        if ( typeof(columns) == "object" ) {
+            for ( let key in columns ) {
+                if ( typeof(columns[key]) == "object" ) {
+                    return this._extractValue(dt[key], columns[key])
+                }
+                else {
+                    return dt[key][columns[key]];
+                }
             }
-            else {
-                return dt[key][columns[key]];
-            }
+        }
+        else {
+            return dt[columns];
         }
     }
 
@@ -250,14 +265,14 @@ class Pagination {
             let first = that.getDoc(".first");
             if(first) {
                 first.addEventListener("click", (e) => {
-                    that.first();
+                    that.first(that._search);
                 });
             }
 
             let prev = that.getDoc(".prev");
             if(prev) {
                 prev.addEventListener("click", (e) => {
-                    that.prev();
+                    that.prev(that._search);
                 });
             }
 
@@ -273,14 +288,14 @@ class Pagination {
             let next = that.getDoc(".next");
             if(next) {
                 next.addEventListener("click", (e) => {
-                    that.next();
+                    that.next(that._search);
                 });
             }
 
             let last = that.getDoc(".last");
             if(last) {
                 last.addEventListener("click", (e) => {
-                    that.last();
+                    that.last(that._search);
                 });
             }
         })();
