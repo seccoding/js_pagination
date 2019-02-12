@@ -140,7 +140,7 @@ class Pagenation {
             html += `<tr data-key="${dt[this._key]}">`
             this._cols.forEach((col, i) => {
                 html += `
-                        <td data-id="${this._titles[i]}">${dt[col]}<div class="col-selector"></div></td>
+                        <td data-id="${this._titles[i]}">${dt[col]}</div></td>
                 `;
             });
             html += "</tr>"
@@ -170,7 +170,7 @@ class Pagenation {
             let col = undefined;
             let colWidth = undefined;
             let selectors = that.getDocAll(".col-selector");
-           
+
             selectors.forEach((div, i) => {
                 
                 if ( (i+1) % parseInt(that._cols.length) > 0 ) {
@@ -183,6 +183,7 @@ class Pagenation {
                         if ( !groupId ) {
                             groupId = e.target.parentElement.attributes[0].nodeValue;
                         }
+
                         col = that.getDoc(`.${groupId}`);
                         x = e.pageX;
                         colWidth = e.target.parentElement.offsetWidth + 2;
