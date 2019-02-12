@@ -4,10 +4,12 @@
         <script src="./js_pagination.js"></script>
         <script>
             let page = undefined;
+            let page2 = undefined;
 
             window.onload = function() {
                 page = new Pagenation(pageCount = 10);
                 page.init({
+                    width: "350px",
                     title: "Registered Articles",
                     query: "#wrapper",
                     data: [
@@ -30,11 +32,39 @@
                         alert(key);
                     }
                 });
-                page.go();
+                page.go();            
+
+                page2 = new Pagenation(pageCount = 10);
+                page2.init({
+                    title: "Registered Articles",
+                    query: "#wrapper2",
+                    data: [
+                        {"A": 1, "B": "A1", "C": "A"},
+                        {"A": 2, "B": "A2", "C": "A"},
+                        {"A": 3, "B": "A3", "C": "A"},
+                        {"A": 4, "B": "A4", "C": "A"},
+                        {"A": 5, "B": "A5", "C": "A"},
+                        {"A": 6, "B": "A6", "C": "A"},
+                        {"A": 7, "B": "A7", "C": "A"},
+                        {"A": 8, "B": "A8", "C": "A"},
+                        {"A": 9, "B": "A9", "C": "A"},
+                        {"A": 10, "B": "A10", "C": "A"},
+                        {"A": 11, "B": "A11", "C": "A"}
+                    ],
+                    subject: ["A", "B", "C"],
+                    cols: ["A", "B", "C"],
+                    key: "A",
+                    callback: function(key) {
+                        alert(key);
+                    }
+                });
+                page2.go();     
+                       
             };
         </script>
     </head>
     <body>
         <div id="wrapper"></div>
+        <div id="wrapper2"></div>
     </body>
 </html>
