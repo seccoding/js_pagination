@@ -16,7 +16,7 @@ div.grid-wrapper > div:nth-child(1) {
     position: relative;
 }
 
-div.grid-wrapper > div:nth-child(1) > div.search {
+div.grid-wrapper > div:nth-child(1) > div.search-wrapper {
     position: absolute;
     right: 4px;
     top: 2px;
@@ -70,5 +70,6 @@ table.grid .col-selector {
     right: 0px;
     top:0px;
     bottom: 0px;
+    z-index: 1;
 }
 
