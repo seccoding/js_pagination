@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="./js_pagination.css" type="text/css" />
+        <script src="./js_pagination.js"></script>
+        <script>
+            let page = undefined;
+
+            window.onload = function() {
+                page = new Pagenation(pageCount = 2);
+                page.init({
+                    title: "Registered Articles",
+                    query: "#wrapper",
+                    data: [
+                        {"A": 1, "B": "A1", "C": "A"},
+                        {"A": 2, "B": "A2", "C": "A"},
+                        {"A": 3, "B": "A3", "C": "A"},
+                        {"A": 4, "B": "A4", "C": "A"},
+                        {"A": 5, "B": "A5", "C": "A"},
+                        {"A": 6, "B": "A6", "C": "A"},
+                        {"A": 7, "B": "A7", "C": "A"},
+                        {"A": 8, "B": "A8", "C": "A"},
+                        {"A": 9, "B": "A9", "C": "A"},
+                        {"A": 10, "B": "A10", "C": "A"},
+                        {"A": 11, "B": "A11", "C": "A"}
+                    ],
+                    subject: ["A", "B", "C"],
+                    cols: ["A", "B", "C"],
+                    key: "A",
+                    callback: function(key) {
+                        alert(key);
+                    }
+                });
+                page.go();
+            };
+        </script>
+    </head>
+    <body>
+        <div id="wrapper"></div>
+    </body>
+</html>
