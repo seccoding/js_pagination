@@ -49,7 +49,7 @@ class Pagination {
         return undefined;
     }
 
-    go(index = 0, searchValue = "") {
+    show(index = 0, searchValue = "") {
         if ( index < 0 ) {
             index = 0;
         }
@@ -86,6 +86,48 @@ class Pagination {
         this._navCount = Math.ceil(datas.length / this._pageCount);
 
         this._show(html);
+
+        this.getDoc(".search").value = this._search;
+        this.getDoc(".search").focus();
+    }
+
+    go(index = 0, searchValue = "") {
+        if ( index < 0 ) {
+            index = 0;
+        }
+
+        this._search = searchValue; 
+        let that = this;
+        let datas = this._data.filter((d) => {
+            let i = 0;
+            for ( let k in d ) {
+                if ( typeof(d[k]) != "object" ) {
+                    if ( (d[k]+ "").includes(this._search) ) {
+                        return true;
+                    }
+                }
+                else {
+                    let value = this._extractValue(d, that._cols[i]) + "";
+
+                    if ( value.includes(this._search) ) {
+                        return true;
+                    }
+                }
+                i++;
+            }
+            
+            return false;
+        });
+
+        this._index = index;
+        this.calculatePagenateParams(this._index);
+        let data = datas.slice(this._start, this._end);
+        let html = this._replaceData(data);
+
+        this._nowGroup = parseInt(this._index / this._navPageCount);
+        this._navCount = Math.ceil(datas.length / this._pageCount);
+
+        this._replace(html);
 
         this.getDoc(".search").value = this._search;
         this.getDoc(".search").focus();
@@ -163,7 +205,33 @@ class Pagination {
 
         html += `
                     </tbody>
-                </table>`;
+                </table>
+                <div class="nav"></div>`;
+        
+        return html;
+    }
+
+    _replaceData(data) {
+        this._count = data.length;
+
+        let html = "";
+
+        data.forEach((dt, i) => {
+            html += `<tr data-key="${dt[this._key]}">`
+            this._cols.forEach((col, i) => {
+
+                let value = dt[col];
+
+                if ( typeof(col) == "object" ) {
+                    value = this._extractValue(dt, col);
+                }
+
+                html += `
+                        <td data-id="${this._titles[i]}">${value}</div></td>
+                `;
+            });
+            html += "</tr>"
+        });
         
         return html;
     }
@@ -185,9 +253,23 @@ class Pagination {
     }
 
     _show(data) {
-        data += this._paginate();
+        //data += this._paginate();
         data += "</div>";
         this.getDoc().innerHTML = data;
+
+        let page = this._paginate();
+        this.getDoc(".nav").insertAdjacentHTML("afterbegin", page);
+        this._setEvents(this);
+    }
+
+    _replace(data) {
+
+        (function(that) {
+            that.getDoc(".nav").innerHTML = that._paginate();
+        })(this);
+        
+        this.getDoc(".grid tbody").innerHTML = "";
+        this.getDoc(".grid tbody").insertAdjacentHTML("afterbegin", data);
         this._setEvents(this);
     }
 
@@ -309,7 +391,7 @@ class Pagination {
             endPage = this._navCount;
         }
         
-        let data = `<div class="nav"><ul>`;
+        let data = `<ul>`;
         if ( startPage >= this._pageCount ) {
             data += `<li class="first">First</li>`
             data += `<li class="prev">${this._prevText}</li>`
@@ -324,7 +406,7 @@ class Pagination {
             data += `<li class="last">Last</li>`
         }
 
-        data += `</ul></div>`;
+        data += `</ul>`;
 
         return data;
     }
