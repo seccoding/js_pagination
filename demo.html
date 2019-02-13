@@ -32,10 +32,11 @@
                         alert(key);
                     }
                 });
-                page.go();            
+                page.show();            
 
                 page2 = new Pagination(pageCount = 10);
                 page2.init({
+                    width: "350px",
                     title: "Registered Articles",
                     query: "#wrapper2",
                     data: [
@@ -58,13 +59,13 @@
                         alert(key);
                     }
                 });
-                page2.go();     
+                page2.show();     
                        
             };
         </script>
     </head>
     <body>
-        <div id="wrapper"></div>
-        <div id="wrapper2"></div>
+        <div id="wrapper" style="display: inline-block;vertical-align: top;"></div>
+        <div id="wrapper2" style="display: inline-block;vertical-align: top;"></div>
     </body>
 </html>
