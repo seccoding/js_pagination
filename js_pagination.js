@@ -102,14 +102,14 @@ class Pagination {
             let i = 0;
             for ( let k in d ) {
                 if ( typeof(d[k]) != "object" ) {
-                    if ( (d[k]+ "").includes(this._search) ) {
+                    if ( (d[k]+ "").toUpperCase().includes(this._search.toUpperCase()) ) {
                         return true;
                     }
                 }
                 else {
                     let value = this._extractValue(d, that._cols[i]) + "";
 
-                    if ( value.includes(this._search) ) {
+                    if ( value.toUpperCase().includes(this._search.toUpperCase()) ) {
                         return true;
                     }
                 }
