@@ -177,7 +177,7 @@ class Pagination {
                         <tr>`;
 
         this._titles.forEach((title, i) => {
-            html += `<th data-id="${title}">${title}<div class="col-selector"></div></th>`;
+            html += `<th data-id="${title}">${title} ${ (i+1) != this._titles.length ? `<div class="col-selector"></div>` : ``}</th>`;
         });
 
         html += `
