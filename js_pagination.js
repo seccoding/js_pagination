@@ -88,7 +88,7 @@ class Pagination {
         this._show(html);
 
         this.getDoc(".search").value = this._search;
-        this.getDoc(".search").focus();
+        //this.getDoc(".search").focus();
     }
 
     go(index = 0, searchValue = "") {
@@ -130,7 +130,7 @@ class Pagination {
         this._replace(html);
 
         this.getDoc(".search").value = this._search;
-        this.getDoc(".search").focus();
+        //this.getDoc(".search").focus();
     }
 
     next(searchValue = "") {
@@ -260,21 +260,27 @@ class Pagination {
         let page = this._paginate();
         this.getDoc(".nav").insertAdjacentHTML("afterbegin", page);
         this._setEvents(this);
-    }
 
-    _replace(data) {
+        (function search(that) {
+            let search = that.getDoc(".search");
 
-        (function(that) {
-            that.getDoc(".nav").innerHTML = that._paginate();
+            const specialCharacters = [
+                "F", "Shift", "Tab", "Caps", "Cont", "Alt", "Enter", "Insert", "Home", "End", "Page", "Arrow", "NumLock",
+                "Print", "Scroll", "Pause", "Meta", "Esc", "NumpadEnter"
+            ];
+
+            search.addEventListener("keyup", (e) => {
+                for ( let specialCharacter of specialCharacters ) {
+                    if ( e.code.indexOf(specialCharacter) == 0 ) {
+                        return;
+                    }
+                }
+
+                that.go(0, search.value);                
+            });
         })(this);
-        
-        this.getDoc(".grid tbody").innerHTML = "";
-        this.getDoc(".grid tbody").insertAdjacentHTML("afterbegin", data);
-        this._setEvents(this);
-    }
 
-    _setEvents(that) {
-        (function generatePaginate() {
+        (function moveCellEvent(that) {
             
             let groupId = undefined;
             let x, diffX = undefined;
@@ -326,14 +332,21 @@ class Pagination {
                 }
                 
             });
-        })();
+        })(this);
+    }
 
-        (function search() {
-            let search = that.getDoc(".search");
-            search.addEventListener("keyup", (e) => {
-                that.go(0, search.value);
-            });
-        })();
+    _replace(data) {
+
+        (function(that) {
+            that.getDoc(".nav").innerHTML = that._paginate();
+        })(this);
+        
+        this.getDoc(".grid tbody").innerHTML = "";
+        this.getDoc(".grid tbody").insertAdjacentHTML("afterbegin", data);
+        this._setEvents(this);
+    }
+
+    _setEvents(that) {
 
         (function rowClick() {
             that.getDocAll("tbody>tr").forEach((tr, i) => {
