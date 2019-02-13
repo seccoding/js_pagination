@@ -4,6 +4,10 @@ body {
 }
 div.grid-wrapper > * {box-sizing: border-box;}
 
+div.grid-wrapper * {
+    font-size: 9pt;
+}
+
 div.grid-wrapper > div {
     color: #333;
     font-size: 9pt;
