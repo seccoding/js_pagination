@@ -262,21 +262,21 @@ class Pagination {
         this._setEvents(this);
 
         (function search(that) {
-            let search = that.getDoc(".search");
+            let _search = that.getDoc(".search");
 
             const specialCharacters = [
                 "F", "Shift", "Tab", "Caps", "Cont", "Alt", "Enter", "Insert", "Home", "End", "Page", "Arrow", "NumLock",
                 "Print", "Scroll", "Pause", "Meta", "Esc", "NumpadEnter"
             ];
 
-            search.addEventListener("keyup", (e) => {
+            _search.addEventListener("keyup", (e) => {
                 for ( let specialCharacter of specialCharacters ) {
                     if ( e.code.indexOf(specialCharacter) == 0 ) {
                         return;
                     }
                 }
 
-                that.go(0, search.value);                
+                that.go(0, _search.value);                
             });
         })(this);
 
@@ -290,6 +290,8 @@ class Pagination {
 
             selectors.forEach((div, i) => {
                 
+                div.parentElement.style.width = "110px";
+
                 if ( (i+1) % parseInt(that._cols.length) > 0 ) {
                     div.addEventListener("mouseover", (e) => {
                         groupId = e.target.parentElement.attributes[0].nodeValue;

@@ -1,0 +1,11 @@
+{
+    "name": "js-pagination",
+    "version": "1.0.0",
+    "scripts": {
+        "build": "babel js_pagination.js -d build"
+    },
+    "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-preset-es2015": "^6.24.1"
+    }
+}
