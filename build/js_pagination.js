@@ -337,8 +337,6 @@ var Pagination = function () {
 
                 selectors.forEach(function (div, i) {
 
-                    div.parentElement.style.width = "110px";
-
                     if ((i + 1) % parseInt(that._cols.length) > 0) {
                         div.addEventListener("mouseover", function (e) {
                             groupId = e.target.parentElement.attributes[0].nodeValue;
