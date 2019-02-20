@@ -2,7 +2,7 @@
     "name": "js-pagination",
     "version": "1.0.0",
     "scripts": {
-        "build": "babel js_pagination.js -d build"
+        "build": "babel src --out-dir build"
     },
     "devDependencies": {
         "babel-cli": "^6.26.0",
