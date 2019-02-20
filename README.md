@@ -11,4 +11,4 @@ npm run build
 /build/js_pagination.css, /build/js_pagination.js 를 사용하면 됩니다.<br/>
 
 ## Demo
-<img src="https://github.com/seccoding/js_pagination/blob/master/demo.gif" />
+<img src="https://github.com/seccoding/js_pagination/blob/master/examples/demo.gif" />
