@@ -5,7 +5,11 @@
     "engines": {
     	"node": ">= 0.4.0"
     },
-    "author": "mcjang1116@gmail.com",
+    "author": {
+        "name": "mcjang1116",
+        "email": "mcjang1116@gmail.com",
+        "url": "https://github.com/seccoding"
+    },
     "main": "./build/js_pagination.js",
     "contributors":[],
     "repository": {
