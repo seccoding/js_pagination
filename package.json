@@ -1,11 +1,32 @@
 {
     "name": "js-pagination",
+    "description": "Paginate for Javascript",
     "version": "1.0.0",
-    "scripts": {
+    "engines": {
+    	"node": ">= 0.4.0"
+    },
+    "author": "mcjang1116@gmail.com",
+    "main": "./build/js_pagination.js",
+    "contributors":[],
+    "repository": {
+    	"type": "git",
+    	"url": "https://github.com/seccoding/js_pagination.git"
+    },
+    "bugs": {
+    	"url": "https://github.com/seccoding/js_pagination/issues"
+    },
+	"scripts": {
         "build": "babel src --out-dir build"
     },
     "devDependencies": {
         "babel-cli": "^6.26.0",
         "babel-preset-es2015": "^6.24.1"
-    }
+    },
+    "licenses": [ 
+    	{
+		    "type": "MIT",
+		    "url": "http://www.opensource.org/licenses/MIT" 
+  		} 
+  	],
+  	"keywords": ["paginate", "pagination", "pager"]
 }
