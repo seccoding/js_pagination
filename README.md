@@ -1,7 +1,7 @@
 # js_pagination
 Pagination by pure javascript (ver. ES6)
 
-<img src="https://img.shields.io/npm/v/js_paginate.svg?style=popout-square"/>
+<a href="https://www.npmjs.com/package/js_paginate"><img src="https://img.shields.io/npm/v/js_paginate.svg?style=popout-square"/></a>
 
 ### NPM Install (Since 2019.02.22)
 > npm install js_paginate
