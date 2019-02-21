@@ -2,7 +2,7 @@
 Pagination by pure javascript (ver. ES6)
 
 ### NPM Install (Since 2019.02.22)
-> npm install js_pagenate
+> npm install js_paginate
 
 ### Build Source Code
 js 수정 후 빌드가 필요하다면<br/>
