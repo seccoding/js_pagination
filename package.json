@@ -1,7 +1,7 @@
 {
     "name": "js_paginate",
     "description": "Paginate for Javascript",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "engines": {
     	"node": ">= 0.4.0"
     },
@@ -26,11 +26,6 @@
         "babel-cli": "^6.26.0",
         "babel-preset-es2015": "^6.24.1"
     },
-    "licenses": [ 
-    	{
-		    "type": "MIT",
-		    "url": "http://www.opensource.org/licenses/MIT" 
-  		} 
-  	],
+    "license": "MIT",
   	"keywords": ["paginate", "pagination", "pager"]
 }
